@@ -3,8 +3,8 @@ from Piece import Piece
 
 
 class Blank(Piece):
-
     location = ""
+    team = ''
 
     def __init__(self, x, y):
         self.location = x + y
@@ -14,3 +14,6 @@ class Blank(Piece):
 
     def calcPaths(self):
         return []
+
+    def toString(self):
+        return "-  "
