@@ -17,7 +17,6 @@ class Pawn(Piece):
         coords = x + y
         gameBoard = GameBoard.gb.grid
         for p in paths:
-            print(p)
             if coords == p:
                 gameBoard[8 - int(y)][ord(x) - 65] = Pawn(x, y, self.team)
                 location = self.location

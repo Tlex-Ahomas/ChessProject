@@ -1,5 +1,6 @@
 from Blank import Blank
 from Pawn import Pawn
+from Queen import Queen
 
 class Board:
     grid = 0
@@ -29,3 +30,13 @@ class Board:
 
     def isBlank(self, x, y):
         return type(self.grid[y][x]).__name__ == "Blank"
+
+    def isCheck(self):
+        kingCount = 0
+        for r in self.grid:
+            for c in r:
+                if type(c).__name__ == "King":
+                    kingCount += 1
+                    kingTeam = c.team
+                    tempQueen = Queen(ord(c.location[:1]) - 65, 8 - int(c.location[1:]), kingTeam)
+                    area = tempQueen.calcPaths()
