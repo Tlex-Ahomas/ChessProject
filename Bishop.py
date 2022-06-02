@@ -7,7 +7,7 @@ class Bishop(Piece):
     location = ""
     team = '' #Char
 
-    def __int__(self, x, y, t):
+    def __init__(self, x, y, t):
         self.location = x + y
         self.team = t
 
@@ -29,25 +29,33 @@ class Bishop(Piece):
         tempx = ord(self.location[:1])-65 # start to 1
         tempy =  8- int(self.y[1:]) # 1 to end
         posMoves = []
-        while(Board.inBounds(tempx + 1, tempy + 1) and Gameboard.gb.isBlank(tempx + 1, tempy + 1)):
+        while(Board.inBounds(tempx + 1, tempy + 1) and GameBoard.gb.grid[tempx + 1][tempy + 1].team == self.team):
             posMoves.append(chr(tempx + 65) + str(8 - tempy))
             tempx +=1
             tempy +=1
+            if(not(GameBoard.gb.grid[tempx][tempy].team == self.team and not(GameBoard.gb.grid[tempx][tempy].team == ''))):
+                break
 
-        while (Board.inBounds(tempx + 1, tempy - 1) and Gameboard.gb.isBlank(tempx + 1, tempy - 1)):
+        while(Board.inBounds(tempx + 1, tempy - 1) and GameBoard.gb.grid[tempx + 1][tempy - 1].team == self.team):
             posMoves.append(chr(tempx + 65) + str(8 - tempy))
             tempx += 1
             tempy -= 1
+            if(not(GameBoard.gb.grid[tempx][tempy].team == self.team and not(GameBoard.gb.grid[tempx][tempy].team == ''))):
+                break
 
-        while (Board.inBounds(tempx - 1, tempy + 1) and Gameboard.gb.isBlank(tempx - 1, tempy + 1)):
+        while(Board.inBounds(tempx - 1, tempy + 1) and GameBoard.gb.grid[tempx - 1][tempy + 1].team == self.team):
             posMoves.append(chr(tempx + 65) + str(8 - tempy))
             tempx -= 1
             tempy += 1
+            if(not(GameBoard.gb.grid[tempx][tempy].team == self.team and not(GameBoard.gb.grid[tempx][tempy].team == ''))):
+                break
 
-        while (Board.inBounds(tempx - 1, tempy - 1) and Gameboard.gb.isBlank(tempx - 1, tempy - 1)):
+        while(Board.inBounds(tempx - 1, tempy - 1) and GameBoard.gb.grid[tempx - 1][tempy - 1].team == self.team):
             posMoves.append(chr(tempx + 65) + str(8 - tempy))
             tempx -= 1
             tempy -= 1
+            if(not(GameBoard.gb.grid[tempx][tempy].team == self.team and not(GameBoard.gb.grid[tempx][tempy].team == ''))):
+                break
 
         return [posMoves]
 
