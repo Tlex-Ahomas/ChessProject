@@ -1,5 +1,5 @@
 import GameBoard
-from Board import Board
+from Blank import Blank
 from Piece import Piece
 
 class Knight (Piece):
@@ -32,7 +32,7 @@ class Knight (Piece):
         allYMoves= [1,-1,2,-2, 2, -2, 1, -1]
         posMoves = []
         for i in(range(8)):
-            if(Board.inBounds(allXMoves[i], allYMoves[i] and not(GameBoard.gb.grid[allXMoves[i]][allYMoves[i]] == self.team ))):
+            if(GameBoard.gb.inBounds(allXMoves[i], allYMoves[i] and not(GameBoard.gb.grid[allXMoves[i]][allYMoves[i]] == self.team ))):
                 posMoves.append(chr(allXMoves[i] + 65) + str(8 - allYMoves[i]))
         return posMoves
 
