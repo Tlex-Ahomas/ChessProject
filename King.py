@@ -29,7 +29,7 @@ class King(Piece):
     def calcPaths(self, board):
         loc = self.location
         tempx = ord(loc[:1]) - 65
-        tempx = 8 - int(loc[1:]) #Convert tiles to grid
+        tempy = 8 - int(loc[1:]) #Convert tiles to grid
         paths = []
         allxpaths = [0,1,1,1,0,-1,-1,-1]
         allypaths = [1,1,0,-1,-1,-1,0,1]
