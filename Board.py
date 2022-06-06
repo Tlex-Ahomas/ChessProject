@@ -50,12 +50,22 @@ class Board:
     def isBlank(self, x, y):
         return type(self.grid[y][x]).__name__ == "Blank"
 
-    def isCheck(self):
-        kingCount = 0
+    def isCheck(self, t):
+        location = ""
+        kingTeam = t
+        if(kingTeam = 'B'):
+            opTeam = 'W'
+        else:
+            opTeam = 'B'
         for r in self.grid:
             for c in r:
-                if type(c).__name__ == "King":
-                    kingCount += 1
-                    kingTeam = c.team
-                    tempQueen = Queen(ord(c.location[:1]) - 65, 8 - int(c.location[1:]), kingTeam)
-                    area = tempQueen.calcPaths()
+                if type(c).__name__ == "King" and c.team == kingTeam:
+                    location = c.location
+
+
+        for r in self.grid
+            for c in r:
+                if(c.team == opTeam):
+                    if c.calcPaths().index(location) >-1:
+                        return True
+        return False
