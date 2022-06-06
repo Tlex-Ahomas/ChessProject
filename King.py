@@ -2,14 +2,15 @@ import GameBoard
 from Blank import Blank
 from Piece import Piece
 
-class Knight (Piece):
+
+
+class King(Piece):
     location = ""
     team = '' #Char
 
-    def __init__(self, x, y, t):
+    def __init__(self,x,y,t):
         location = x + y
         team = t
-
 
     def move(self, x, y):
         paths = self.calcPaths() # Gives Valid Paths
@@ -18,7 +19,7 @@ class Knight (Piece):
 
         for p in paths:
             if p == coord: #If the valid path matches with coordinate intended to move to
-                gameBoard[8 - int(y)][ord(x) - 65] = Knight(x, y, self.team) # Sets new coordinates to bishop
+                gameBoard[8 - int(y)][ord(x) - 65] = King(x, y, self.team) # Sets new coordinates to bishop
                 gameBoard[8 - int(self.location[1:])][ord(self.location[:1]) - 65] = Blank(x, y) # Sets old coordinates to blank
                 GameBoard.gb.grid = gameBoard # Put the board back after editing
                 return True
@@ -26,15 +27,20 @@ class Knight (Piece):
 
 
     def calcPaths(self):
-        tempx = ord(self.location[:1])-65 # start to 1
-        tempy =  8- int(self.y[1:]) # 1 to end
-        allXMoves= [2,2, 1, 1, -1, -1, -2, -2]
-        allYMoves= [1,-1,2,-2, 2, -2, 1, -1]
-        posMoves = []
+        loc = self.location
+        tempx = ord(loc[:1]) - 65
+        tempx = 8 - int(loc[1:]) #Convert tiles to grid
+        paths = []
+        allxpaths = [0,1,1,1,0,-1,-1,-1]
+        allypaths = [1,1,0,-1,-1,-1,0,1]
         for i in(range(8)):
-            if(GameBoard.gb.inBounds(allXMoves[i] + tempx, allYMoves[i]+tempx) and not(GameBoard.gb.grid[allXMoves[i] + tempx][allYMoves[i] + tempx] == self.team )):
-                posMoves.append(chr(allXMoves[i] + tempx + 65) + str(8 - (allYMoves[i] + tempx))
-        return posMoves
+            if(GameBoard.gb.inBounds(allxpaths[i] + tempx, allypaths[i] + tempy) and not(GameBoard.gb.grid[allXMoves[i]][allYMoves[i]] == self.team )):
+                paths.append(chr(allXMoves[i] + tempx + 65) + str(8 - (allYMoves[i] + tempy)))
+        return paths
+
+
+
+
 
     def toString(self):
-        return "H  "
+        return "K  "
