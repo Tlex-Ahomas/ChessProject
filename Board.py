@@ -1,6 +1,10 @@
 from Blank import Blank
 from Pawn import Pawn
 from Queen import Queen
+from Rook import Rook
+from Knight import Knight
+from King import King
+from Bishop import Bishop
 
 class Board:
     grid = 0
