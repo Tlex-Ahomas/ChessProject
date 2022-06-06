@@ -55,4 +55,7 @@ class Pawn(Piece):
         return paths
 
     def toString(self):
-        return "P  "
+        if(self.team == 'W'):
+            return "\033[94mP  \033[0m"
+        elif(self.team == 'B'):
+            return "\033[93mP  \033[0m"

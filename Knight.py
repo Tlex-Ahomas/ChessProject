@@ -7,8 +7,8 @@ class Knight (Piece):
     team = '' #Char
 
     def __init__(self, x, y, t):
-        location = x + y
-        team = t
+        self.location = x + y
+        self.team = t
 
 
     def move(self, x, y):
@@ -33,8 +33,11 @@ class Knight (Piece):
         posMoves = []
         for i in(range(8)):
             if(GameBoard.gb.inBounds(allXMoves[i] + tempx, allYMoves[i]+tempx) and not(GameBoard.gb.grid[allXMoves[i] + tempx][allYMoves[i] + tempx] == self.team )):
-                posMoves.append(chr(allXMoves[i] + tempx + 65) + str(8 - (allYMoves[i] + tempx))
+                posMoves.append(chr(allXMoves[i] + tempx + 65) + str(8 - (allYMoves[i] + tempx)))
         return posMoves
 
     def toString(self):
-        return "H  "
+        if (self.team == 'W'):
+            return "\033[94mH  \033[0m"
+        elif (self.team == 'B'):
+            return "\033[93mH  \033[0m"

@@ -2,7 +2,6 @@
 import GameBoard
 from Board import Board
 
-
 gameBoard = Board()
 GameBoard.gb = gameBoard
 gameBoard.print()
