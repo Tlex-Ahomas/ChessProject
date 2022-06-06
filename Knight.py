@@ -12,14 +12,14 @@ class Knight (Piece):
 
 
     def move(self, x, y, board):
-        paths = self.calcPaths() # Gives Valid Paths
+        paths = self.calcPaths(board) # Gives Valid Paths
         coord = x + y
         gameBoard = board
 
         for p in paths:
             if p == coord: #If the valid path matches with coordinate intended to move to
-                gameBoard[8 - int(y)][ord(x) - 65] = Knight(x, y, self.team) # Sets new coordinates to bishop
-                gameBoard[8 - int(self.location[1:])][ord(self.location[:1]) - 65] = Blank(x, y) # Sets old coordinates to blank
+                gameBoard.grid[8 - int(y)][ord(x) - 65] = Knight(x, y, self.team) # Sets new coordinates to bishop
+                gameBoard.grid[8 - int(self.location[1:])][ord(self.location[:1]) - 65] = Blank(x, y) # Sets old coordinates to blank
                 board = gameBoard # Put the board back after editing
                 return True
         return False
@@ -27,13 +27,13 @@ class Knight (Piece):
 
     def calcPaths(self, board):
         tempx = ord(self.location[:1])-65 # start to 1
-        tempy =  8- int(self.y[1:]) # 1 to end
+        tempy =  8- int(self.location[1:]) # 1 to end
         allXMoves= [2,2, 1, 1, -1, -1, -2, -2]
         allYMoves= [1,-1,2,-2, 2, -2, 1, -1]
         posMoves = []
         for i in(range(8)):
-            if(board.inBounds(allXMoves[i] + tempx, allYMoves[i]+tempx) and not(board.grid[allXMoves[i] + tempx][allYMoves[i] + tempx] == self.team )):
-                posMoves.append(chr(allXMoves[i] + tempx + 65) + str(8 - (allYMoves[i] + tempx)))
+            if(board.inBounds(allXMoves[i] + tempx, allYMoves[i]+tempy) and not(board.grid[allXMoves[i] + tempx][allYMoves[i] + tempy] == self.team )):
+                posMoves.append(chr(allXMoves[i] + tempx + 65) + str(8 - (allYMoves[i] + tempy)))
         return posMoves
 
     def toString(self):

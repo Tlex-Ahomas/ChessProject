@@ -12,23 +12,24 @@ class Pawn(Piece):
         self.location = x + y
         self.team = t
 
-    def move(self, x, y):
-        paths = self.calcPaths()
+
+    def move(self, x, y, b):
+        paths = self.calcPaths(b)
         coords = x + y
-        gameBoard = GameBoard.gb.grid
+        gameBoard = b.grid
         for p in paths:
             if coords == p:
                 gameBoard[8 - int(y)][ord(x) - 65] = Pawn(x, y, self.team)
                 location = self.location
                 gameBoard[8 - int(location[1:])][ord(location[:1]) - 65] = Blank(x, y)
-                GameBoard.gb.grid = gameBoard
+                b.grid = gameBoard
                 return True
         return False
 
-    def calcPaths(self):
+    def calcPaths(self , b):
         location = self.location
         paths = []
-        gameBoard = GameBoard.gb
+        gameBoard = b
         nextx = ord(location[:1]) - 65
         nexty = 0
         addMove = 0

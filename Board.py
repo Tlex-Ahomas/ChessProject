@@ -49,7 +49,7 @@ class Board:
 
     @staticmethod
     def inBounds(x, y):
-        return 0 <= x <= 8 and 0 <= y <= 8
+        return 0 <= x < 8 and 0 <= y < 8
 
     def isBlank(self, x, y):
         return type(self.grid[y][x]).__name__ == "Blank"

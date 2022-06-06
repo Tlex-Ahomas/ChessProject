@@ -12,7 +12,7 @@ class Rook(Piece):
         self.team = t
 
     def move(self, x, y, b):
-        paths = self.calcPaths()
+        paths = self.calcPaths(b)
         coords = x + y
         gm = b.grid
         for p in paths:
