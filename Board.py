@@ -54,23 +54,53 @@ class Board:
     def isBlank(self, x, y):
         return type(self.grid[y][x]).__name__ == "Blank"
 
-    @staticmethod
-    def isCheck(self, t, board):
+
+    def isCheck(self,  t):
         location = ""
         kingTeam = t
         if(kingTeam == 'B'):
             opTeam = 'W'
         else:
             opTeam = 'B'
-        for r in board.grid:
+        for r in self.grid:
             for c in r:
                 if type(c).__name__ == "King" and c.team == kingTeam:
                     location = c.location
-
-
         for r in board.grid:
             for c in r:
                 if(c.team == opTeam):
                     if c.calcPaths().index(location) >= 1:
                         return True
         return False
+
+
+
+
+    def isCheckmate (self, t):
+        if not isCheck(t):
+            return False
+        else:
+            kingTeam = t
+            if (kingTeam == 'B'):
+                opTeam = 'W'
+            else:
+                opTeam = 'B'
+            location = ""
+            kingTeam = t
+            if (kingTeam == 'B'):
+                opTeam = 'W'
+            else:
+                opTeam = 'B'
+            for r in self.grid:
+                for c in r:
+                    if type(c).__name__ == "King" and c.team == kingTeam:
+                        location = c.location
+            tempBoard = Board()
+            for m in self.grid[ord(location[:1]) - 65][ 8 - int(location[1:])].calcPaths():
+                tempBoard.grid = self.grid
+                tempBoard.grid [ord(location[:1]) - 65][ 8 - int(location[1:])]. move()
+
+
+
+
+

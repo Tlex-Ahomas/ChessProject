@@ -12,30 +12,30 @@ class King(Piece):
         self.location = x + y
         self.team = t
 
-    def move(self, x, y):
-        paths = self.calcPaths() # Gives Valid Paths
+    def move(self, x, y, board):
+        paths = self.calcPaths(board) # Gives Valid Paths
         coord = x + y
-        gameBoard = GameBoard.gb.grid
+        gameBoard = board.grid
 
         for p in paths:
             if p == coord: #If the valid path matches with coordinate intended to move to
                 gameBoard[8 - int(y)][ord(x) - 65] = King(x, y, self.team) # Sets new coordinates to bishop
                 gameBoard[8 - int(self.location[1:])][ord(self.location[:1]) - 65] = Blank(x, y) # Sets old coordinates to blank
-                GameBoard.gb.grid = gameBoard # Put the board back after editing
+                board = gameBoard # Put the board back after editing
                 return True
         return False
 
 
-    def calcPaths(self):
+    def calcPaths(self, board):
         loc = self.location
         tempx = ord(loc[:1]) - 65
-        tempx = 8 - int(loc[1:]) #Convert tiles to grid
+        tempy = 8 - int(loc[1:]) #Convert tiles to grid
         paths = []
         allxpaths = [0,1,1,1,0,-1,-1,-1]
         allypaths = [1,1,0,-1,-1,-1,0,1]
         for i in(range(8)):
-            if(GameBoard.gb.inBounds(allxpaths[i] + tempx, allypaths[i] + tempy) and not(GameBoard.gb.grid[allXMoves[i]][allYMoves[i]] == self.team )):
-                paths.append(chr(allXMoves[i] + tempx + 65) + str(8 - (allYMoves[i] + tempy)))
+            if(board.inBounds(allxpaths[i] + tempx, allypaths[i] + tempy) and not(board.grid[allxpaths[i]][allypaths[i]] == self.team )):
+                paths.append(chr(allxpaths[i] + tempx + 65) + str(8 - (allypaths[i] + tempy)))
         return paths
 
 
