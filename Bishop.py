@@ -61,7 +61,10 @@ class Bishop(Piece):
 
 
     def toString(self):
-        return"B  "
+        if (self.team == 'W'):
+            return "\033[94mB  \033[0m"
+        elif (self.team == 'B'):
+            return "\033[93mB  \033[0m"
 
 
 

@@ -127,4 +127,7 @@ class Queen(Piece):
         return paths
 
     def toString(self):
-        return "Q  "
+        if (self.team == 'W'):
+            return "\033[94mQ  \033[0m"
+        elif (self.team == 'B'):
+            return "\033[93mQ  \033[0m"

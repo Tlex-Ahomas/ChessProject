@@ -9,8 +9,8 @@ class King(Piece):
     team = '' #Char
 
     def __init__(self,x,y,t):
-        location = x + y
-        team = t
+        self.location = x + y
+        self.team = t
 
     def move(self, x, y):
         paths = self.calcPaths() # Gives Valid Paths
@@ -43,4 +43,7 @@ class King(Piece):
 
 
     def toString(self):
-        return "K  "
+        if (self.team == 'W'):
+            return "\033[94mK  \033[0m"
+        elif (self.team == 'B'):
+            return "\033[93mK  \033[0m"

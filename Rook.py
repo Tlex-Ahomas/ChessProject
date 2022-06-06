@@ -11,22 +11,22 @@ class Rook(Piece):
         self.location = x + y
         self.team = t
 
-    def move(self, x, y):
+    def move(self, x, y, b):
         paths = self.calcPaths()
         coords = x + y
-        gm = GameBoard.gb.grid
+        gm = b.grid
         for p in paths:
             if coords == p:
                 gm[8 - int(y)][ord(x) - 65] = Rook(x, y, self.team)
                 location = self.location
                 gm[8 - int(location[1:])][ord(location[:1]) - 65] = Blank(x, y)
-                GameBoard.gb.grid = gm
+                b.grid = gm
                 return True
             return False
 
-    def calcPaths(self):
+    def calcPaths(self, b):
         loc = self.location
-        gm = GameBoard.gb
+        gm = b
         paths = []
         locx = ord(loc[:1]) - 65
         locy = 8 - int(loc[1:])
@@ -78,5 +78,8 @@ class Rook(Piece):
         return paths
 
     def toString(self):
-        return "R  "
+        if (self.team == 'W'):
+            return "\033[94mR  \033[0m"
+        elif (self.team == 'B'):
+            return "\033[93mR  \033[0m"
     

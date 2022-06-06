@@ -11,11 +11,11 @@ class Piece(ABC):
         pass
 
     @abstractmethod
-    def move(self, x, y):
+    def move(self, x, y, b):
         pass
 
     @abstractmethod
-    def calcPaths(self):
+    def calcPaths(self, b):
         pass
 
     @abstractmethod
