@@ -6,10 +6,12 @@ import GameBoard
 class Rook(Piece):
     location = ""
     team = ''
+    moved = False
 
     def __init__(self, x, y, t):
         self.location = x + y
         self.team = t
+        self.moved = False
 
     def move(self, x, y, b):
         paths = self.calcPaths(b)
@@ -17,12 +19,16 @@ class Rook(Piece):
         gm = b.grid
         for p in paths:
             if coords == p:
-                gm[8 - int(y)][ord(x) - 65] = Rook(x, y, self.team)
+                self.moved = True
                 location = self.location
-                gm[8 - int(location[1:])][ord(location[:1]) - 65] = Blank(x, y)
+                oldy = 8 - int(location[1:])
+                oldx = ord(location[:1]) - 65
+                gm[8 - int(y)][ord(x) - 65] = gm[oldy][oldx]
+                self.location = x + y
+                gm[oldy][oldx] = Blank(x, y)
                 b.grid = gm
                 return True
-            return False
+        return False
 
     def calcPaths(self, b):
         loc = self.location
@@ -49,7 +55,7 @@ class Rook(Piece):
             if(gm.isBlank(nextx, nexty)):
                 paths.append(chr(nextx + 65) + str(8 - nexty))
                 nexty += 1
-            elif(gm.grid[nexty][nexty].team != self.team):
+            elif(gm.grid[nexty][nextx].team != self.team):
                 paths.append(chr(nextx + 65) + str(8 - nexty))
                 break
             else:

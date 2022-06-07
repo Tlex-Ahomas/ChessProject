@@ -47,7 +47,7 @@ class Queen(Piece):
             if (board.isBlank(nextx, nexty)):
                 paths.append(chr(nextx + 65) + str(8 - nexty))
                 nexty += 1
-            elif (board.grid[nexty][nexty].team != self.team):
+            elif (board.grid[nexty][nextx].team != self.team):
                 paths.append(chr(nextx + 65) + str(8 - nexty))
                 break
             else:
@@ -55,7 +55,7 @@ class Queen(Piece):
         nextx = locx - 1
         nexty = locy
         while (board.inBounds(nextx, nexty)):
-            if (board.inBlank(nextx, nexty)):
+            if (board.isBlank(nextx, nexty)):
                 paths.append(chr(nextx + 65) + str(8 - nexty))
                 nextx -= 1
             elif (board.grid[nexty][nextx].team != self.team):
@@ -76,8 +76,8 @@ class Queen(Piece):
                 break
         nextx = locx + 1
         nexty = locy + 1
-        while (board.inBounds(nextx, nexty)):
-            if board.isBlank((nextx, nexty)):
+        while board.inBounds(nextx, nexty):
+            if board.isBlank(nextx, nexty):
                 paths.append(chr(nextx + 65) + str(8 - nexty))
                 nextx += 1
                 nexty += 1

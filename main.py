@@ -24,7 +24,6 @@ while True:
         continue
     elif len(gameBoard.grid[coords[1]][coords[0]].calcPaths(gameBoard)) < 1:
         print("This piece cannot be moved")
-        print(gameBoard.grid[coords[1]][coords[0]].calcPaths(gameBoard))
         continue
 
     print(gameBoard.grid[coords[1]][coords[0]].calcPaths(gameBoard))
