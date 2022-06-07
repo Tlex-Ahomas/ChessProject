@@ -24,8 +24,10 @@ while True:
         continue
     elif len(gameBoard.grid[coords[1]][coords[0]].calcPaths(gameBoard)) < 1:
         print("This piece cannot be moved")
+        print(gameBoard.grid[coords[1]][coords[0]].calcPaths(gameBoard))
         continue
 
+    print(gameBoard.grid[coords[1]][coords[0]].calcPaths(gameBoard))
     mv = input("Where would you like to move your " + type(gameBoard.grid[coords[1]][coords[0]]).__name__ + " ")
 
     while not validInput(mv):
@@ -38,6 +40,7 @@ while True:
         team = 'B'
     else:
         team = 'W'
+
 
 
 

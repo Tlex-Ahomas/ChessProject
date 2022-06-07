@@ -30,6 +30,7 @@ class Rook(Piece):
         paths = []
         locx = ord(loc[:1]) - 65
         locy = 8 - int(loc[1:])
+
         nextx = locx
         nexty = locy - 1
         while(gm.inBounds(nextx, nexty)):
@@ -41,6 +42,7 @@ class Rook(Piece):
                 break
             else:
                 break
+
         nextx = locx
         nexty = locy + 1
         while(gm.inBounds(nextx, nexty)):
@@ -52,10 +54,11 @@ class Rook(Piece):
                 break
             else:
                 break
+
         nextx = locx - 1
         nexty = locy
         while(gm.inBounds(nextx, nexty)):
-            if(gm.inBlank(nextx, nexty)):
+            if(gm.isBlank(nextx, nexty)):
                 paths.append(chr(nextx + 65) + str(8 - nexty))
                 nextx -= 1
             elif(gm.grid[nexty][nextx].team != self.team):
@@ -63,17 +66,18 @@ class Rook(Piece):
                 break
             else:
                 break
-            nextx = locx + 1
-            nexty = locy
-            while(gm.inBounds(nextx, nexty)):
-                if(gm.isBlank(nextx, nexty)):
-                    paths.append(chr(nextx + 65) + str(8 - nexty))
-                    nextx += 1
-                elif(gm.grid[nexty][nextx].team != self.team):
-                    paths.append(chr(nextx + 65) + str(8 - nexty))
-                    break
-                else:
-                    break
+
+        nextx = locx + 1
+        nexty = locy
+        while(gm.inBounds(nextx, nexty)):
+            if(gm.isBlank(nextx, nexty)):
+                paths.append(chr(nextx + 65) + str(8 - nexty))
+                nextx += 1
+            elif(gm.grid[nexty][nextx].team != self.team):
+                paths.append(chr(nextx + 65) + str(8 - nexty))
+                break
+            else:
+                break
 
         return paths
 

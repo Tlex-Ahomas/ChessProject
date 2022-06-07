@@ -32,7 +32,7 @@ class Knight (Piece):
         allYMoves= [1,-1,2,-2, 2, -2, 1, -1]
         posMoves = []
         for i in(range(8)):
-            if(board.inBounds(allXMoves[i] + tempx, allYMoves[i]+tempy) and not(board.grid[allXMoves[i] + tempx][allYMoves[i] + tempy] == self.team )):
+            if(board.inBounds(allXMoves[i] + tempx, allYMoves[i]+tempy) and (board.grid[allYMoves[i] + tempy][allXMoves[i] + tempx].team != self.team )):
                 posMoves.append(chr(allXMoves[i] + tempx + 65) + str(8 - (allYMoves[i] + tempy)))
         return posMoves
 
