@@ -68,7 +68,7 @@ class Board:
                     location = c.location
         for r in board.grid:
             for c in r:
-                if(c.team == opTeam):
+                if c.team == opTeam:
                     if c.calcPaths().index(location) >= 1:
                         return True
         return False
@@ -93,14 +93,25 @@ class Board:
                 opTeam = 'B'
             for r in self.grid:
                 for c in r:
-                    if type(c).__name__ == "King" and c.team == kingTeam:
+                    if type(c).__name__ == "King" and c.team == kingTeam: #Finds King
                         location = c.location
             tempBoard = Board()
             for m in self.grid[ord(location[:1]) - 65][ 8 - int(location[1:])].calcPaths():
                 tempBoard.grid = self.grid
-                tempBoard.grid [ord(location[:1]) - 65][ 8 - int(location[1:])]. move()
+                tempBoard.grid [ord(location[:1]) - 65][ 8 - int(location[1:])]. move(m[1:],m[:1], tempBoard)
+                if not tempBoard.isCheck(t):
+                    return False
 
+            for r in self.grid:
+                for c in r:
+                    if c.team == t:
+                        for m in c.calcPaths():
+                            tempBoard.grid = self.grid
+                            c.move(m[1:], m[:1], tempBoard)
+                            if not tempBoard.isCheck(t):
+                                return False
 
+        return True
 
 
 
