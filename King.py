@@ -18,7 +18,6 @@ class King(Piece):
         paths = self.calcPaths(board) # Gives Valid Paths
         coord = x + y
         gameBoard = board.grid
-
         for p in paths:
             if p == coord: #If the valid path matches with coordinate intended to move to
                 self.moved = True
@@ -30,6 +29,56 @@ class King(Piece):
                 board = gameBoard # Put the board back after editing
                 return True
         return False
+
+    def canCastleLeft(self, b):
+        potentialRook = b.grid[8 - int(self.location[1:])][0]
+        row = 8 - int(self.location[1:])
+        empty = True
+        for i in range(1, 4):
+            if not b.isBlank(i, row):
+                empty = False
+        return not(self.moved) and type(potentialRook).__name__ == "Rook" and not potentialRook.moved and empty
+
+    def canCastleRight(self, b):
+        row = 8 - int(self.location[1:])
+        potentialRook = b.grid[row][7]
+        empty = True
+        for i in range(5, 7):
+            if not b.isBlank(i, row):
+                empty = False
+        return not(self.moved) and type(potentialRook).__name__ == "Rook" and not potentialRook.moved and empty
+
+    def castle(self, dir, b):
+        row = 8 - int(self.location[1:])
+        if dir == 'L' and self.canCastleLeft(b):
+            #swaps King and Blank
+            b.grid[row][2] = b.grid[row][4]
+            b.grid[row][4] = Blank(self.location[:1], self.location[1:])
+
+            #swaps Rook and Blank
+            b.grid[row][3] = b.grid[row][0]
+            b.grid[row][0] = Blank(chr(row + 65), '1')
+
+            #updates location fields of King and Rook
+            self.location = "C" + str(8 - row)
+            b.grid[row][3] = "D" + str(8 - row)
+            return True
+        elif dir == 'R' and self.canCastleRight(b):
+            #swaps King and Blank
+            b.grid[row][6] = b.grid[row][4]
+            b.grid[row][4] = Blank("E", str(8 - row))
+
+            #swaps Rook and Blank
+            b.grid[row][5] = b.grid[row][7]
+            b.grid[row][7] = Blank("H", str(8 - row))
+
+            #updates location fields of King and Rook
+            self.location = "G" + str(8 - row)
+            b.grid[row][5].location = "F" + str(8 - row)
+            return True
+        return False
+
+
 
 
     def calcPaths(self, board):
