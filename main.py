@@ -11,7 +11,7 @@ team = 'W'
 gameBoard = Board()
 gameBoard.print()
 
-while True:
+while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != False):
     attempt = input(team + ": select which piece to move ")
     if not validInput(attempt):
         print("Invalid input")
@@ -32,8 +32,12 @@ while True:
     while not validInput(mv):
         mv = input("Invalid input, please enter a valid space on the board ")
 
-    while not gameBoard.grid[coords[1]][coords[0]].move(mv[:1], mv[1:], gameBoard):
+    tempBoard = gameBoard
+
+    while not tempBoard.grid[coords[1]][coords[0]].move(mv[:1], mv[1:], tempBoard and not tempBoard.isCheck(team)):
+        tempBoard = gameBoard
         mv = input("That piece cannot move there, please select a valid position to move it to ")
+    gameBoard = tempBoard
     gameBoard.print()
     if team == 'W':
         team = 'B'
@@ -41,7 +45,10 @@ while True:
         team = 'W'
 
 
-
+if (gameBoard.isCheckmate('B')):
+    print("White Wins!")
+else:
+    print("Black Wins")
 
 # eventually we put the driver code here
 
