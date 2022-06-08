@@ -62,7 +62,7 @@ class King(Piece):
 
             #updates location fields of King and Rook
             self.location = "C" + str(8 - row)
-            b.grid[row][3] = "D" + str(8 - row)
+            b.grid[row][3].location = "D" + str(8 - row)
 
             if not b.isCheck(self.team):
                 board = b
