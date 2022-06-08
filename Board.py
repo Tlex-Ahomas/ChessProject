@@ -41,11 +41,14 @@ class Board:
 
     def print(self):
         grid = self.grid
+        col = "8"
         for r in grid:
-            row = ""
+            row = "\033[92m" + col + "\033[0m "
             for c in r:
                 row += c.toString()
+            col = str(int(col) - 1)
             print(row)
+        print("\033[92m  A  B  C  D  E  F  G  H\033[0m")
 
     @staticmethod
     def inBounds(x, y):

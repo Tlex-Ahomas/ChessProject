@@ -12,7 +12,12 @@ gameBoard = Board()
 gameBoard.print()
 
 while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != False):
-    attempt = input(team + ": select which piece to move ")
+    if team == 'W':
+        alliance = "Blue"
+    elif team == 'B':
+        alliance = "Yellow"
+
+    attempt = input(alliance + ": select which piece to move ")
     if not validInput(attempt):
         print("Invalid input")
         continue
@@ -58,15 +63,30 @@ while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != F
 
     print(gameBoard.grid[coords[1]][coords[0]].calcPaths(gameBoard))
     mv = input("Where would you like to move your " + type(gameBoard.grid[coords[1]][coords[0]]).__name__ + " ")
+    if mv == "cancel":
+        continue
 
+    canceler = False
     while not validInput(mv):
         mv = input("Invalid input, please enter a valid space on the board ")
+        if mv == "cancel":
+            canceler = True
+            break
+
+    if canceler:
+        continue
 
     tempBoard = gameBoard
-
     while not tempBoard.grid[coords[1]][coords[0]].move(mv[:1], mv[1:], tempBoard) and not tempBoard.isCheck(team):
         tempBoard = gameBoard
         mv = input("That piece cannot move there, please select a valid position to move it to ")
+        if mv == "cancel":
+            canceler = True
+            break
+
+    if canceler:
+        continue
+
     gameBoard = tempBoard
     gameBoard.print()
     if team == 'W':
@@ -76,9 +96,9 @@ while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != F
 
 
 if (gameBoard.isCheckmate('B')):
-    print("White Wins!")
+    print("Blue Wins!")
 else:
-    print("Black Wins")
+    print("Yellow Wins")
 
 # eventually we put the driver code here
 
