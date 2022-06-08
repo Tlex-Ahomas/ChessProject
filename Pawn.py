@@ -57,6 +57,8 @@ class Pawn(Piece):
 
     def toString(self):
         if(self.team == 'W'):
-            return "\033[94mP  \033[0m"
+            #return "\033[94mP  \033[0m"
+            return "\u265F  "
         elif(self.team == 'B'):
-            return "\033[93mP  \033[0m"
+            #return "\033[93mP  \033[0m"
+            return "\u2659  "

@@ -127,6 +127,8 @@ class Queen(Piece):
 
     def toString(self):
         if (self.team == 'W'):
-            return "\033[94mQ  \033[0m"
+            #return "\033[94mQ  \033[0m"
+            return "\u265B  "
         elif (self.team == 'B'):
-            return "\033[93mQ  \033[0m"
+            #return "\033[93mQ  \033[0m"
+            return "\u2655  "

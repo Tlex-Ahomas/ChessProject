@@ -13,9 +13,9 @@ gameBoard.print()
 
 while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != False):
     if team == 'W':
-        alliance = "Blue"
+        alliance = "White"
     elif team == 'B':
-        alliance = "Yellow"
+        alliance = "Black"
 
     attempt = input(alliance + ": select which piece to move ")
     if not validInput(attempt):
@@ -96,9 +96,9 @@ while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != F
 
 
 if (gameBoard.isCheckmate('B')):
-    print("Blue Wins!")
+    print("White Wins!")
 else:
-    print("Yellow Wins")
+    print("Black Wins")
 
 # eventually we put the driver code here
 

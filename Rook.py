@@ -89,7 +89,9 @@ class Rook(Piece):
 
     def toString(self):
         if (self.team == 'W'):
-            return "\033[94mR  \033[0m"
+            #return "\033[94mR  \033[0m"
+            return "\u265C  "
         elif (self.team == 'B'):
-            return "\033[93mR  \033[0m"
+            #return "\033[93mR  \033[0m"
+            return "\u2656  "
     

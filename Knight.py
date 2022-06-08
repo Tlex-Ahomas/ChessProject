@@ -38,6 +38,8 @@ class Knight (Piece):
 
     def toString(self):
         if (self.team == 'W'):
-            return "\033[94mH  \033[0m"
+            #return "\033[94mH  \033[0m"
+            return "\u265E  "
         elif (self.team == 'B'):
-            return "\033[93mH  \033[0m"
+            #return "\033[93mH  \033[0m"
+            return "\u2658  "

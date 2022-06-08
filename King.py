@@ -99,6 +99,8 @@ class King(Piece):
 
     def toString(self):
         if (self.team == 'W'):
-            return "\033[94mK  \033[0m"
+            #return "\033[94mK  \033[0m"
+            return "\u265A  "
         elif (self.team == 'B'):
-            return "\033[93mK  \033[0m"
+            #return "\033[93mK  \033[0m"
+            return "\u2654  "
