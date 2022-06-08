@@ -1,3 +1,4 @@
+import copy
 from Blank import Blank
 from Pawn import Pawn
 from Queen import Queen
@@ -99,18 +100,19 @@ class Board:
                     if type(c).__name__ == "King" and c.team == kingTeam: #Finds King
                         location = c.location
             tempBoard = Board()
-            for m in self.grid[ord(location[:1]) - 65][ 8 - int(location[1:])].calcPaths(self):
-                tempBoard.grid = self.grid
-                tempBoard.grid [ord(location[:1]) - 65][ 8 - int(location[1:])]. move(m[1:],m[:1], tempBoard)
+            for m in (self.grid[ 8 - int(location[1:])][ord(location[:1]) - 65]).calcPaths(self):
+                tempBoard.grid = copy.deepcopy(self.grid)
+                tempBoard.grid[ 8 - int(location[1:])][ord(location[:1]) - 65].move(m[:1],m[1:], tempBoard)
                 if not tempBoard.isCheck(t):
                     return False
 
+            tempBoard = copy.deepcopy(self)
             for r in self.grid:
                 for c in r:
                     if c.team == t:
                         for m in c.calcPaths(self):
-                            tempBoard.grid = self.grid
-                            c.move(m[1:], m[:1], tempBoard)
+                            tempBoard.grid = copy.deepcopy(self.grid)
+                            c.move(m[:1], m[1:], tempBoard)
                             if not tempBoard.isCheck(t):
                                 return False
 

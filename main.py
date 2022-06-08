@@ -1,5 +1,5 @@
 # import Piece
-import GameBoard
+import copy
 from Board import Board
 
 
@@ -26,10 +26,10 @@ while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != F
         for r in gameBoard.grid:
             for c in r:
                 if type(c).__name__ == "King" and c.team == team:  #finds King
-                    tempBoard = gameBoard  #copies current board to tempBoard
+                    tempBoard = copy.deepcopy(gameBoard)  #copies current board to tempBoard
                     if attempt == "castleL":
                         if c.castle('L', tempBoard):  #determines if board was able to castle left
-                            gameBoard = tempBoard
+                            gameBoard = copy.deepcopy(tempBoard)
                             if team == 'W':
                                 team = 'B'
                             else:
@@ -40,7 +40,7 @@ while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != F
                             break  #for a failed castle, the gameBoard remains unchanged, it does NOT become the other player's turn, and the rest of the loop is skipped
                     elif attempt == "castleR":  #same as above code but for castling right
                         if c.castle('R', tempBoard):
-                            gameBoard = tempBoard
+                            gameBoard = copy.deepcopy(tempBoard)
                             if team == 'W':
                                 team = 'B'
                             else:
@@ -77,9 +77,9 @@ while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != F
     if canceler:
         continue
 
-    tempBoard = gameBoard
-    while not tempBoard.grid[coords[1]][coords[0]].move(mv[:1], mv[1:], tempBoard) and not tempBoard.isCheck(team):
-        tempBoard = gameBoard
+    tempBoard = copy.deepcopy(gameBoard)
+    while not tempBoard.grid[coords[1]][coords[0]].move(mv[:1], mv[1:], tempBoard) or tempBoard.isCheck(team):
+        tempBoard = copy.deepcopy(gameBoard)
         mv = input("That piece cannot move there, please select a valid position to move it to ")
         if mv == "cancel":
             canceler = True
@@ -88,7 +88,7 @@ while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != F
     if canceler:
         continue
 
-    gameBoard = tempBoard
+    gameBoard = copy.deepcopy(tempBoard)
     gameBoard.print()
     if team == 'W':
         team = 'B'

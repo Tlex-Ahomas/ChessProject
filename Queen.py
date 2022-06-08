@@ -1,7 +1,5 @@
 from Blank import Blank
 from Piece import Piece
-import GameBoard
-
 
 class Queen(Piece):
 
