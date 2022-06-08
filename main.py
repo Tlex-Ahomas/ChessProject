@@ -17,6 +17,35 @@ while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != F
         print("Invalid input")
         continue
 
+    if len(attempt) > 2:
+        for r in gameBoard.grid:
+            for c in r:
+                if type(c).__name__ == "King" and c.team == team:  #finds King
+                    tempBoard = gameBoard  #copies current board to tempBoard
+                    if attempt == "castleL":
+                        if c.castleLeft(tempBoard):  #determines if board was able to castle left
+                            gameBoard = tempBoard
+                            if team == 'W':
+                                team = 'B'
+                            else:
+                                team = 'W'
+                            continue  #for a successful castle, the gameBoard is updated, it becomes the other player's turn, and the rest of the code in the loop is skipped
+                        else:
+                            print("Conditions for castling left not met")
+                            continue  #for a failed castle, the gameBoard remains unchanged, it does NOT become the other player's turn, and the rest of the loop is skipped
+                    elif attempt == "castleR":  #same as above code but for castling right
+                        if c.castleRight(tempBoard):
+                            gameBoard = tempBoard
+                            if team == 'W':
+                                team = 'B'
+                            else:
+                                team = 'W'
+                            continue
+                        else:
+                            print("Conditions for castling right not met")
+                            continue
+
+
     coords = [ord(attempt[:1]) - 65, 8 - int(attempt[1:])]
 
     if gameBoard.grid[coords[1]][coords[0]].team != team:

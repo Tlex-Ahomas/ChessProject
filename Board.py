@@ -55,7 +55,7 @@ class Board:
         return type(self.grid[y][x]).__name__ == "Blank"
 
 
-    def isCheck(self,  t):
+    def isCheck(self, t):
         location = ""
         kingTeam = t
         if(kingTeam == 'B'):
@@ -66,10 +66,10 @@ class Board:
             for c in r:
                 if type(c).__name__ == "King" and c.team == kingTeam:
                     location = c.location
-        for r in board.grid:
+        for r in self.grid:
             for c in r:
                 if c.team == opTeam:
-                    if c.calcPaths().index(location) >= 1:
+                    if c.calcPaths(self).index(location) >= 1:
                         return True
         return False
 
@@ -77,7 +77,7 @@ class Board:
 
 
     def isCheckmate (self, t):
-        if not isCheck(t):
+        if not self.isCheck(t):
             return False
         else:
             kingTeam = t
