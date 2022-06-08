@@ -49,6 +49,7 @@ while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != F
                         else:
                             print("Conditions for castling right not met")
                             break
+        gameBoard.print()
         continue
 
 

@@ -48,7 +48,8 @@ class King(Piece):
                 empty = False
         return not(self.moved) and type(potentialRook).__name__ == "Rook" and not potentialRook.moved and empty
 
-    def castle(self, dir, b):
+    def castle(self, dir, board):
+        b = board
         row = 8 - int(self.location[1:])
         if dir == 'L' and self.canCastleLeft(b):
             #swaps King and Blank
@@ -62,7 +63,10 @@ class King(Piece):
             #updates location fields of King and Rook
             self.location = "C" + str(8 - row)
             b.grid[row][3] = "D" + str(8 - row)
-            return True
+
+            if not b.isCheck(self.team):
+                board = b
+                return True
         elif dir == 'R' and self.canCastleRight(b):
             #swaps King and Blank
             b.grid[row][6] = b.grid[row][4]
@@ -75,7 +79,10 @@ class King(Piece):
             #updates location fields of King and Rook
             self.location = "G" + str(8 - row)
             b.grid[row][5].location = "F" + str(8 - row)
-            return True
+
+            if not b.isCheck(self.team):
+                board = b
+                return True
         return False
 
 
