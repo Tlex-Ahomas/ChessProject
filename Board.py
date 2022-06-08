@@ -69,7 +69,7 @@ class Board:
         for r in self.grid:
             for c in r:
                 if c.team == opTeam:
-                    if c.calcPaths(self).index(location) >= 1:
+                    if c.calcPaths(self).count(location) > 0:
                         return True
         return False
 
