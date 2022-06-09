@@ -31,8 +31,10 @@ while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != F
                         if c.castle('L', tempBoard):  #determines if board was able to castle left
                             gameBoard = copy.deepcopy(tempBoard)
                             if team == 'W':
+                                gameBoard.moveListW.append("castle_left")
                                 team = 'B'
                             else:
+                                gameBoard.moveListB.append("castle_left")
                                 team = 'W'
                             break  #for a successful castle, the gameBoard is updated, it becomes the other player's turn, and the rest of the code in the loop is skipped
                         else:
@@ -42,8 +44,10 @@ while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != F
                         if c.castle('R', tempBoard):
                             gameBoard = copy.deepcopy(tempBoard)
                             if team == 'W':
+                                gameBoard.moveListW.append("castle_right")
                                 team = 'B'
                             else:
+                                gameBoard.moveListB.append("castle_right")
                                 team = 'W'
                             break
                         else:
@@ -87,6 +91,11 @@ while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != F
 
     if canceler:
         continue
+
+    if team == 'W':
+        gameBoard.moveListW.append(attempt + " " + mv)
+    else:
+        gameBoard.moveListB.append(attempt + " " + mv)
 
     gameBoard = copy.deepcopy(tempBoard)
     gameBoard.print()

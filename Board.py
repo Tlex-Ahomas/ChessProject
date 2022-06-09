@@ -9,8 +9,12 @@ from Bishop import Bishop
 
 class Board:
     grid = 0
+    moveListW = []
+    moveListB = []
 
     def __init__(self):
+        self.moveListW = []
+        self.moveListB = []
         grid = []
         for r in range(1, 9):
             temp = []
