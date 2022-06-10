@@ -87,7 +87,7 @@ class Pawn(Piece):
         lastPiece = ""
         if len(oppMoves) > 0:
             lastMove = oppMoves[len(oppMoves) - 1]
-            if lastMove.index(" ") > 0:
+            if lastMove.count(" ") > 0:
                 lastMoveDiff = abs(int(lastMove[lastMove.index(" ") - 1 : lastMove.index(" ")]) - int(lastMove[lastMove.index(" ") + 2 :]))
                 lastPiece = lastMove[:lastMove.index("-")]
                 currPos = lastMove[lastMove.index(" ")]
@@ -105,7 +105,7 @@ class Pawn(Piece):
         lastPiece = ""
         if len(oppMoves) > 0:
             lastMove = oppMoves[len(oppMoves) - 1]
-            if lastMove.index(" ") > 0:
+            if lastMove.count(" ") > 0:
                 lastMoveDiff = abs(int(lastMove[lastMove.index(" ") - 1: lastMove.index(" ")]) - int(lastMove[lastMove.index(" ") + 2:]))
                 lastPiece = lastMove[:lastMove.index("-")]
                 currPos = lastMove[lastMove.index(" ") + 1:]
