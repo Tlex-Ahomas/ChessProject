@@ -31,6 +31,7 @@ class CPU:
         return move
 
     def filterForChecks(self, board, location):
+        return 0 #temporary
 
 
 
