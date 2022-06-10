@@ -71,6 +71,7 @@ while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != F
     if mv == "cancel":
         continue
 
+    movingPiece = type(gameBoard.grid[coords[1]][coords[0]]).__name__
     canceler = False
     while not validInput(mv):
         mv = input("Invalid input, please enter a valid space on the board ")
@@ -92,12 +93,13 @@ while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != F
     if canceler:
         continue
 
-    if team == 'W':
-        gameBoard.moveListW.append(attempt + " " + mv)
-    else:
-        gameBoard.moveListB.append(attempt + " " + mv)
-
     gameBoard = copy.deepcopy(tempBoard)
+
+    if team == 'W':
+        gameBoard.moveListW.append(movingPiece + "-" + attempt + " " + mv)
+    else:
+        gameBoard.moveListB.append(movingPiece + "-" + attempt + " " + mv)
+
     gameBoard.print()
     if team == 'W':
         team = 'B'
