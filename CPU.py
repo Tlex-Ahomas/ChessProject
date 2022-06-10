@@ -50,7 +50,6 @@ class CPU:
             if tempBoard.isCheck(team):
                 moves.remove(m)
             tempBoard = copy.deepcopy(board)
-
         return moves
 
 
