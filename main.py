@@ -1,6 +1,11 @@
 # import Piece
 import copy
 from Board import Board
+from CPU import CPU
+from Queen import Queen
+from Rook import Rook
+from Knight import Knight
+from Bishop import Bishop
 
 
 def validInput(p):
@@ -9,6 +14,27 @@ def validInput(p):
 
 team = 'W'
 gameBoard = Board()
+bot = False
+dacomputer = 0
+answer = input("Two player or AI? 2/AI ")
+while not(answer == '2' or answer == 'AI'):
+    answer = input("Invalid input, options: 2, AI ")
+
+if answer == '2':
+    bot = False
+elif answer == 'AI':
+    bot = True
+
+    botTeam = input("Will CPU be White or Black? W/B ")
+    while not(botTeam == 'W' or botTeam == 'B'):
+        botTeam = input("Invalid input, options: W, B ")
+
+    botDiff = input("Select CPU difficulty, options: 0, 1 ")
+    while not botDiff.isnumeric() and not(int(botDiff) == 0 or int(botDiff) == 1):
+        botDiff = input("Invalid input, options: 0, 1 ")
+
+    dacomputer = CPU(botTeam, botDiff)
+
 gameBoard.print()
 
 while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != False):
@@ -16,6 +42,23 @@ while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != F
         alliance = "White"
     elif team == 'B':
         alliance = "Black"
+
+    if bot and dacomputer.team == team:
+        cpuMove = dacomputer.makeMove(gameBoard)
+        gameBoard.grid = cpuMove[0]
+        if team == 'W':
+            gameBoard.moveListW.append(cpuMove[1] + "-" + cpuMove[2] + " " + cpuMove[3])
+            print(gameBoard.moveListW[len(gameBoard.moveListW) - 1])
+        else:
+            gameBoard.moveListB.append(cpuMove[1] + "-" + cpuMove[2] + " " + cpuMove[3])
+            print(gameBoard.moveListB[len(gameBoard.moveListB) - 1])
+
+        if team == 'W':
+            team = 'B'
+        else:
+            team = 'W'
+        gameBoard.print()
+        continue
 
     attempt = input(alliance + ": select which piece to move ")
     if not validInput(attempt):
@@ -92,6 +135,20 @@ while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != F
 
     if canceler:
         continue
+
+    if type(tempBoard.grid[8 - int(mv[1:])][ord(mv[:1]) - 65]).__name__ == "Pawn" and ((mv[1:] == '8' and team == 'W') or (mv[1:] == '1' and team == 'B')):
+        tempBoard.print()
+        ans = input("You can promote your pawn, options: Q for Queen, R for Rook, B for Bishop, K for Knight ")
+        while not (ans == "Q" or ans == "R" or ans == "B" or ans == "K"):
+            ans = input("Invalid input, options: Q for Queen, R for Rook, B for Bishop, K for Knight ")
+        if ans == "Q":
+            gameBoard[8 - int(mv[1:])][ord(mv[:1]) - 65] = Queen(mv[:1], mv[1:], team)
+        elif ans == "R":
+            gameBoard[8 - int(mv[1:])][ord(mv[:1]) - 65] = Rook(mv[:1], mv[1:], team)
+        elif ans == "B":
+            gameBoard[8 - int(mv[1:])][ord(mv[:1]) - 65] = Bishop(mv[:1], mv[1:], team)
+        elif ans == "K":
+            gameBoard[8 - int(mv[1:])][ord(mv[:1]) - 65] = Knight(mv[:1], mv[1:], team)
 
     gameBoard = copy.deepcopy(tempBoard)
 

@@ -13,8 +13,8 @@ class CPU:
     difficulty = 0
 
     def __init__(self, t, d):
-        team = t
-        difficulty = d # 0 or 1 for now
+        self.team = t
+        self.difficulty = d # 0 or 1 for now
 
 
     def makeMove(self, board):
@@ -24,21 +24,22 @@ class CPU:
         move = ""
         for r in tempBoard.grid:
             for c in r:
-                if(tempBoard.grid[r][c].team == team): #Creates list of pieces CPU can move
-                    pieces.appends(tempBoard.grid[r][c])
-        r = random.randint(len(pieces))
+                if(c.team == self.team): #Creates list of pieces CPU can move
+                    pieces.append(c)
+        r = random.randint(0, len(pieces) - 1)
         while(move == ""):
-            temp = filterForChecks(tempBoard, pieces[r].location)
+            if r >= len(pieces):
+                r = random.randint(0, len(pieces) - 1)
+            temp = self.filterForChecks(tempBoard, pieces[r].location)
             if len(temp) ==0:
                 pieces.pop(r)
             else:
-                r2 = randInt(len(temp))
-                pieces[r].move(temp[r2])
+                r2 = random.randint(0, len(temp) - 1)
+                pieces[r].move(temp[r2][:1], temp[r2][1:], tempBoard)
+                if type(pieces[r]).__name__ == "Pawn" and ((temp[r2][1:] == '8' and self.team == 'W') or (temp[r2][1:] == '1' and self.team == 'B')):
+                    tempBoard.grid[8 - int(temp[r2][1:])][ord(temp[r2][:1]) - 65] = Queen(temp[r2][:1], temp[r2][1:], self.team)
                 move = temp[r2]
-
-
-
-        return move
+        return [tempBoard.grid, type(pieces[r]).__name__, pieces[r].location, temp[r2]]
 
     def filterForChecks(self, board, location):
         tempBoard = copy.deepcopy(board)
@@ -47,7 +48,7 @@ class CPU:
         moves = piece.calcPaths(tempBoard)
         for m in piece.calcPaths(tempBoard):
             piece.move(m[:1], m[:1], tempBoard)
-            if tempBoard.isCheck(team):
+            if tempBoard.isCheck(self.team):
                 moves.remove(m)
             tempBoard = copy.deepcopy(board)
         return moves
