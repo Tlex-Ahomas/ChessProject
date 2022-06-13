@@ -31,20 +31,20 @@ class Pawn(Piece):
                     gameBoard[8 - int(location[1:])][ord(x) - 65] = Blank(x, location[1:])
                 gameBoard[8 - int(location[1:])][ord(location[:1]) - 65] = Blank(location[:1], location[1:])
                 b.grid = gameBoard
-                if (self.team == 'W' and y == "8") or (self.team == 'B' and y == "1"):
-                    b.print()
-                    ans = input("You can promote your pawn, options: Q for Queen, R for Rook, B for Bishop, K for Knight ")
-                    while not(ans == "Q" or ans == "R" or ans == "B" or ans == "K"):
-                        ans = input("Invalid input, options: Q for Queen, R for Rook, B for Bishop, K for Knight ")
-                    if ans == "Q":
-                        gameBoard[8 - int(y)][ord(x) - 65] = Queen(x, y, self.team)
-                    elif ans == "R":
-                        gameBoard[8 - int(y)][ord(x) - 65] = Rook(x, y, self.team)
-                    elif ans == "B":
-                        gameBoard[8 - int(y)][ord(x) - 65] = Bishop(x, y, self.team)
-                    elif ans == "K":
-                        gameBoard[8 - int(y)][ord(x) - 65] = Knight(x, y, self.team)
-                    b.grid = gameBoard
+                # if (self.team == 'W' and y == "8") or (self.team == 'B' and y == "1"):
+                #     b.print()
+                #     ans = input("You can promote your pawn, options: Q for Queen, R for Rook, B for Bishop, K for Knight ")
+                #     while not(ans == "Q" or ans == "R" or ans == "B" or ans == "K"):
+                #         ans = input("Invalid input, options: Q for Queen, R for Rook, B for Bishop, K for Knight ")
+                #     if ans == "Q":
+                #         gameBoard[8 - int(y)][ord(x) - 65] = Queen(x, y, self.team)
+                #     elif ans == "R":
+                #         gameBoard[8 - int(y)][ord(x) - 65] = Rook(x, y, self.team)
+                #     elif ans == "B":
+                #         gameBoard[8 - int(y)][ord(x) - 65] = Bishop(x, y, self.team)
+                #     elif ans == "K":
+                #         gameBoard[8 - int(y)][ord(x) - 65] = Knight(x, y, self.team)
+                #     b.grid = gameBoard
                 return True
         return False
 
