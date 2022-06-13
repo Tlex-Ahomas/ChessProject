@@ -16,8 +16,35 @@ class CPU:
         self.team = t
         self.difficulty = d # 0 or 1 for now
 
+    def makeSmartMove(self,board):
 
     def makeMove(self, board):
+        if self.difficulty == 0:
+            makeBozoMove(board)
+        else:
+            makeSmartMove(board)
+
+
+    def makeSmartMove(self,board): #This might take a minute
+        tempBoard = copy.deepcopy(board)
+        moves = []
+        pieces = []
+        move = ""
+        for r in tempBoard.grid:
+            for c in r:
+                if(tempBoard.grid[r][c].team == team): #Creates list of pieces CPU can move
+                    pieces.appends(tempBoard.grid[r][c])
+        r = random.randint(len(pieces))
+            while move == "":
+                r = random.randint(len(pieces))
+                temp = r.calcPaths()
+                while len(temp) > 0:
+                    r2 = randint(len(temp)
+
+
+
+
+    def makeBozoMove(self, board):
         tempBoard = copy.deepcopy(board)
         moves = []
         pieces = []
@@ -35,6 +62,7 @@ class CPU:
             temp = self.filterForChecks(tempBoard, pieces[r].location)
             if len(temp) == 0:
                 pieces.pop(r)
+                r = random.randint(len(pieces))
             else:
                 r2 = random.randint(0, len(temp) - 1)
                 oldloc = pieces[r].location
@@ -43,6 +71,7 @@ class CPU:
                     tempBoard.grid[8 - int(temp[r2][1:])][ord(temp[r2][:1]) - 65] = Queen(temp[r2][:1], temp[r2][1:], self.team)
                 move = temp[r2]
         return [tempBoard.grid, type(pieces[r]).__name__, oldloc, temp[r2]]
+
 
     def filterForChecks(self, board, location):
         tempBoard = copy.deepcopy(board)
