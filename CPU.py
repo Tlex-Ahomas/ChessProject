@@ -53,20 +53,50 @@ class CPU:
 
 
     def makeSmartMove(self,board): #This might take a minute
+        if(team == 'W'):
+            otherTeam = 'B'
+        else:
+            otherTeam = 'W'
         tempBoard = copy.deepcopy(board)
         moves = []
         pieces = []
+        enemyPieces = []
         move = ""
         for r in tempBoard.grid:
             for c in r:
-                if(tempBoard.grid[r][c].team == self.team): #Creates list of pieces CPU can move
-                    pieces.appends(tempBoard.grid[r][c])
-        r = random.randint(len(pieces))
-        while move == "":
+                if(c.team == team): #Creates list of pieces CPU can move
+                    pieces.appends(c)
+
+        for r in tempBoard.grid:
+            for c in r:
+                if c.team == otherTeam: #Creates list of enemy pieces
+                    pieces.append(c)
+
+        while move == "" and len(pieces>0):
+            tempBoard = copy.deepcopy(board)
             r = random.randint(len(pieces))
-            temp = r.calcPaths()
+            oldloc = pieces[r].location
+            temp = pieces[r].calcPaths()
+            r2 = random.randint(len(temp))
+            pieces[r].move(temp[r2][:1], temp[r2][1:], tempBoard)
             while len(temp) > 0:
-                r2 = random.randint(len(temp))
+                r2 = randint(len(temp))
+                for p in enemyPieces:
+                    for m in enemyPieces.calcPaths(tempBoard):
+                         tempBoard2 = copy.deepcopy(tempBoard)  # resets board for further test
+                         p.move(m[:1],m[1:])
+                         valid = true
+                         if tempBoard.isCheck(team) and not tempBoard.isCheck(otherTeam):
+                            valid = False
+                    if valid == True:
+                        move = m
+                        return[tempBoard.grid, type(pieces[r]).__name__, oldloc, temp[r2]]
+                    else:
+                        temp.pop(r2)
+                pieces.pop(r)
+            makeBozoMove()
+
+
 
 
 
