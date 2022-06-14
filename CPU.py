@@ -16,7 +16,7 @@ class CPU:
         self.team = t
         self.difficulty = d # 0 or 1 for now
 
-    def makeSmartMove(self,board):
+
 
     def makeMove(self, board):
         if self.difficulty == 0:
@@ -26,7 +26,7 @@ class CPU:
 
 
     def makeSmartMove(self,board): #This might take a minute
-        if(team = 'W'):
+        if(team == 'W'):
             otherTeam = 'B'
         else:
             otherTeam = 'W'
