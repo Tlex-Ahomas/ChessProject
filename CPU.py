@@ -16,13 +16,40 @@ class CPU:
         self.team = t
         self.difficulty = d # 0 or 1 for now
 
+    def makeTakeMove(self, board):
+        tempboard = copy.deepcopy(board)
+        moves = []
+        pieces = []
+        move = ""
+        for r in tempboard.grid:
+            for c in r:
+                if c.team == self.team and not tempboard.isBlank(ord(c.location[:1]) - 65, 8 - int(c.location[1:])):
+                    pieces.append(c)
+        p = 0
+        while len(pieces) > 0:
+            p = random.randint(0, len(pieces) - 1)
+            paths = self.filterForChecks(tempboard, pieces[p].location)
+            for h in paths:
+                if tempboard.grid[8 - int(h[1:])][ord(h[:1]) - 65].team != self.team and not tempboard.isBlank(ord(h[:1]) - 65, 8 - int(h[1:])):
+                    move = h
+                    oldLoc = pieces[p].location
+                    pieces[p].move(move[:1], move[1:], tempboard)
+                    if not tempboard.isCheck(self.team):
+                        board = copy.deepcopy(tempboard)
+                        return [board.grid, type(pieces[p]).__name__, oldLoc, move]
+                    else:
+                        move = ""
+            pieces.pop(p)
+        return self.makeBozoMove(board)
 
 
     def makeMove(self, board):
         if self.difficulty == 0:
-            makeBozoMove(board)
-        else:
-            makeSmartMove(board)
+            return self.makeBozoMove(board)
+        elif self.difficulty == 1:
+            return self.makeSmartMove(board)
+        elif self.difficulty == 2:
+            return self.makeTakeMove(board)
 
 
     def makeSmartMove(self,board): #This might take a minute
@@ -74,11 +101,6 @@ class CPU:
 
 
 
-
-
-
-
-
     def makeBozoMove(self, board):
         tempBoard = copy.deepcopy(board)
         moves = []
@@ -93,17 +115,14 @@ class CPU:
         while(move == ""):
             if r >= len(pieces):
                 r = len(pieces) - 1
-            print(r)
             temp = self.filterForChecks(tempBoard, pieces[r].location)
             if len(temp) == 0:
                 pieces.pop(r)
-                r = random.randint(len(pieces))
+                r = random.randint(0, len(pieces) - 1)
             else:
                 r2 = random.randint(0, len(temp) - 1)
                 oldloc = pieces[r].location
                 pieces[r].move(temp[r2][:1], temp[r2][1:], tempBoard)
-                if type(pieces[r]).__name__ == "Pawn" and ((temp[r2][1:] == '8' and self.team == 'W') or (temp[r2][1:] == '1' and self.team == 'B')):
-                    tempBoard.grid[8 - int(temp[r2][1:])][ord(temp[r2][:1]) - 65] = Queen(temp[r2][:1], temp[r2][1:], self.team)
                 move = temp[r2]
         return [tempBoard.grid, type(pieces[r]).__name__, oldloc, temp[r2]]
 

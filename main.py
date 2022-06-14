@@ -29,11 +29,11 @@ elif answer == 'AI':
     while not(botTeam == 'W' or botTeam == 'B'):
         botTeam = input("Invalid input, options: W, B ")
 
-    botDiff = input("Select CPU difficulty, options: 0, 1 ")
-    while not botDiff.isnumeric() and not(int(botDiff) == 0 or int(botDiff) == 1):
-        botDiff = input("Invalid input, options: 0, 1 ")
+    botDiff = input("Select CPU difficulty, options: 0, 1, 2 ")
+    while not botDiff.isnumeric() and not(int(botDiff) == 0 or int(botDiff) == 1 or int(botDiff) == 2):
+        botDiff = input("Invalid input, options: 0, 1, 2 ")
 
-    dacomputer = CPU(botTeam, botDiff)
+    dacomputer = CPU(botTeam, int(botDiff))
 
 gameBoard.print()
 
@@ -46,6 +46,11 @@ while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != F
     if bot and dacomputer.team == team:
         cpuMove = dacomputer.makeMove(gameBoard)
         gameBoard.grid = cpuMove[0]
+        if cpuMove[1] == "Pawn" and ((team == 'W' and cpuMove[3][1:] == '8') or (team == 'B' and cpuMove[3][1:] == '1')):
+            locx = ord(cpuMove[3][:1]) - 65
+            locy = 8 - int(cpuMove[3][1:])
+            gameBoard.grid[locy][locx] = Queen(locx, locy, team)
+
         if team == 'W':
             gameBoard.moveListW.append(cpuMove[1] + "-" + cpuMove[2] + " " + cpuMove[3])
             print(gameBoard.moveListW[len(gameBoard.moveListW) - 1])
