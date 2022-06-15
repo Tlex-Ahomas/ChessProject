@@ -16,7 +16,7 @@ team = 'W'
 gameBoard = Board()
 bot = False
 dacomputer = 0
-answer = input("Two player or AI? 2/AI ")
+answer = input("Two player or AI? 2/AI (NOTE: AI is currently experimental) ")
 while not(answer == '2' or answer == 'AI'):
     answer = input("Invalid input, options: 2, AI ")
 

@@ -120,12 +120,10 @@ class CPU:
         r = random.randint(0, len(pieces) - 1)
         oldloc = ""
         while(move == ""):
-            if r >= len(pieces):
-                r = len(pieces) - 1
+            r = random.randint(0, len(pieces) - 1)
             temp = self.filterForChecks(tempBoard, pieces[r].location)
             if len(temp) == 0:
                 pieces.pop(r)
-                r = random.randint(0, len(pieces) - 1)
             else:
                 r2 = random.randint(0, len(temp) - 1)
                 oldloc = pieces[r].location
@@ -139,7 +137,7 @@ class CPU:
 
         piece = tempBoard.grid[8 - int(location[1:])][ord(location[:1]) - 65]
         moves = piece.calcPaths(tempBoard)
-        for m in piece.calcPaths(tempBoard):
+        for m in moves:
             piece.move(m[:1], m[1:], tempBoard)
             if tempBoard.isCheck(self.team):
                 moves.remove(m)
