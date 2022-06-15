@@ -147,13 +147,13 @@ while not(gameBoard.isCheckmate('B') != False or gameBoard.isCheckmate('W') != F
         while not (ans == "Q" or ans == "R" or ans == "B" or ans == "K"):
             ans = input("Invalid input, options: Q for Queen, R for Rook, B for Bishop, K for Knight ")
         if ans == "Q":
-            gameBoard[8 - int(mv[1:])][ord(mv[:1]) - 65] = Queen(mv[:1], mv[1:], team)
+            gameBoard.grid[8 - int(mv[1:])][ord(mv[:1]) - 65] = Queen(mv[:1], mv[1:], team)
         elif ans == "R":
-            gameBoard[8 - int(mv[1:])][ord(mv[:1]) - 65] = Rook(mv[:1], mv[1:], team)
+            gameBoard.grid[8 - int(mv[1:])][ord(mv[:1]) - 65] = Rook(mv[:1], mv[1:], team)
         elif ans == "B":
-            gameBoard[8 - int(mv[1:])][ord(mv[:1]) - 65] = Bishop(mv[:1], mv[1:], team)
+            gameBoard.grid[8 - int(mv[1:])][ord(mv[:1]) - 65] = Bishop(mv[:1], mv[1:], team)
         elif ans == "K":
-            gameBoard[8 - int(mv[1:])][ord(mv[:1]) - 65] = Knight(mv[:1], mv[1:], team)
+            gameBoard.grid[8 - int(mv[1:])][ord(mv[:1]) - 65] = Knight(mv[:1], mv[1:], team)
 
     gameBoard = copy.deepcopy(tempBoard)
 
